@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/camera_nav_graph"
+    app:startDestination="@id/captureImageFragment">
+
+    <action
+        android:id="@+id/action_to_captureImageFragment"
+        app:destination="@+id/captureImageFragment"
+        app:launchSingleTop="true"/>
+
+    <action
+        android:id="@+id/action_to_editImageFragment"
+        app:destination="@+id/editImageFragment"
+        app:launchSingleTop="true"/>
+
+    <fragment
+        android:id="@+id/captureImageFragment"
+        android:name="com.example.docscanner.ui.fragments.CaptureImageFragment"
+        android:label="CaptureImageFragment" />
+    <fragment
+        android:id="@+id/editImageFragment"
+        android:name="com.example.docscanner.ui.fragments.EditImageFragment"
+        android:label="EditImageFragment" />
+</navigation>
