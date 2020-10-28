@@ -16,7 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DocScanner">
-        <activity android:name=".ui.activities.EditImageActivity"></activity>
         <activity android:name=".ui.activities.CameraActivity" />
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>

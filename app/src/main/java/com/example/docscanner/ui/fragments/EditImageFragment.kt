@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.example.docscanner.R
 import com.example.docscanner.data.models.Document
 import com.example.docscanner.ui.adapters.EditImageAdapter
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.edit_images_fragment.*
 import timber.log.Timber
 import java.util.ArrayList
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapter.EditImageListener {
@@ -26,6 +28,9 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
     private val vm: CameraViewModel by activityViewModels()
 
     private lateinit var callback: EditImageInteractor
+
+    @Inject
+    lateinit var glide:RequestManager
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,17 +52,20 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
     private fun subscribeToObservers() {
         vm.docList.observe(requireActivity(), Observer {
             it?.let {
-                editImageAdapter.setData(it)
-                editImageAdapter.setCurrentPosition(0)
-                Glide.with(requireContext())
-                        .load(it[0].bitmap)
-                        .into(imgEditDoc)
+                if (imgEditDoc!=null){
+                    editImageAdapter.setData(it)
+                    editImageAdapter.setCurrentPosition(0)
+                    glide.apply {
+                        load(it[0].bitmap)
+                                .into(imgEditDoc)
+                    }
+                }
             }
         })
     }
 
     private fun setUpEditImageAdapter() {
-        editImageAdapter = EditImageAdapter(requireContext(), this)
+        editImageAdapter = EditImageAdapter(requireContext(), this, glide)
         rvImages.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = editImageAdapter
@@ -65,7 +73,10 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
     }
 
     override fun onImageClicked(document: Document) {
-        imgEditDoc.setImageBitmap(document.bitmap)
+        glide.apply {
+            load(document.bitmap)
+                    .into(imgEditDoc)
+        }
     }
 
     interface EditImageInteractor{
@@ -75,18 +86,6 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callback = context as EditImageInteractor
-    }
-
-    companion object{
-
-        private var editImageFragment:EditImageFragment?=null
-
-        fun getInstance():EditImageFragment?{
-            if (editImageFragment == null)
-                editImageFragment = EditImageFragment()
-
-            return editImageFragment
-        }
     }
 
 }

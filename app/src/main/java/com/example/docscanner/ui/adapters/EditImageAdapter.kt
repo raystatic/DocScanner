@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.example.docscanner.R
 import com.example.docscanner.data.models.Document
 import com.example.docscanner.other.CameraXUtility
 import com.example.docscanner.other.Utility
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.edit_image_adapter_item.view.*
+import javax.inject.Inject
 
-class EditImageAdapter(var ctx: Context, var listener:EditImageListener) : RecyclerView.Adapter<EditImageAdapter.EditImageViewHolder>(){
+class EditImageAdapter(var ctx: Context, var listener:EditImageListener, var glide:RequestManager) : RecyclerView.Adapter<EditImageAdapter.EditImageViewHolder>(){
 
     private var data:List<Document>?=null
 
@@ -52,10 +55,10 @@ class EditImageAdapter(var ctx: Context, var listener:EditImageListener) : Recyc
         val item = data?.get(position)
 
         holder.itemView.apply {
-//            imgEditItem.setImageBitmap(item?.bitmap)
-            Glide.with(ctx)
-                    .load(item?.bitmap)
-                    .into(imgEditItem)
+            glide.apply {
+                load(item?.bitmap)
+                        .into(imgEditItem)
+            }
 
             if (position == selectedPosition){
                 imgEditItem.background = ctx.resources.getDrawable(R.drawable.edit_image_selected_background)

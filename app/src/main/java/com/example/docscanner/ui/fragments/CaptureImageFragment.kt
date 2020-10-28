@@ -1,12 +1,10 @@
 package com.example.docscanner.ui.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -15,13 +13,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.example.docscanner.R
 import com.example.docscanner.data.models.Document
 import com.example.docscanner.other.CameraXUtility
 import com.example.docscanner.other.Constants
 import com.example.docscanner.other.Utility
-import com.example.docscanner.ui.activities.EditImageActivity
 import com.example.docscanner.ui.viewmodels.CameraViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.capture_image_fragment.*
@@ -31,6 +29,7 @@ import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
@@ -43,6 +42,9 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
     private var docList = ArrayList<Document>()
 
     private lateinit var callback: CaptureImageInteractor
+
+    @Inject
+    lateinit var glide: RequestManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,22 +67,6 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
 
     }
 
-    private fun openEditImageFragment() {
-//        EditImageFragment.getInstance()?.let {
-//            supportFragmentManager
-//                    .beginTransaction()
-//                    .replace(R.id.edit_images_container, it)
-//                    .addToBackStack(null)
-//                    .commit()
-//        }
-    }
-
-    private fun openEditImageActivity() {
-        val intent = Intent(requireContext(), EditImageActivity::class.java)
-        intent.putParcelableArrayListExtra("docs",docList)
-        startActivity(intent)
-    }
-
     private fun subscribeToObservers() {
 
         vm.docList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -88,7 +74,10 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
                 if (docs.isNotEmpty()){
                     docList = docs as ArrayList
                     val document = docList[docList.size -1]
-                    docThumb.setImageBitmap(document.bitmap)
+                    glide.apply {
+                        load(document.bitmap)
+                                .into(docThumb)
+                    }
                 }
             }
         })
