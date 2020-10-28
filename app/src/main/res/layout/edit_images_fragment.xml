@@ -33,13 +33,36 @@
 
     </RelativeLayout>
 
-    <ImageView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
-        android:id="@+id/imgEditDoc"
-        android:src="@mipmap/ic_launcher"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:id="@+id/sourceFrame">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imgEditDoc"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher"
+                android:layout_margin="10dp"
+                android:adjustViewBounds="true"/>
+
+        </FrameLayout>
+
+        <com.example.docscanner.other.PolygonView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/polygonView"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
