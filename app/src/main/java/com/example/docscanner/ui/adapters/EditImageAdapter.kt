@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
 import com.example.docscanner.R
 import com.example.docscanner.data.models.Document
 import com.example.docscanner.other.CameraXUtility
@@ -19,7 +21,6 @@ class EditImageAdapter(var ctx: Context, var listener:EditImageListener, var gli
 
     private var data:List<Document>?=null
 
-    private var selectedPosition = -1
 
     interface EditImageListener{
         fun onImageClicked(document: Document)
@@ -65,6 +66,7 @@ class EditImageAdapter(var ctx: Context, var listener:EditImageListener, var gli
                 imgEditItem.setPadding(convertToDp(10),convertToDp(10), convertToDp(10), convertToDp(10))
             } else{
                 imgEditItem.background = null
+                imgEditItem.setPadding(convertToDp(0),convertToDp(0), convertToDp(0), convertToDp(0))
             }
 
             setOnClickListener {
@@ -77,5 +79,9 @@ class EditImageAdapter(var ctx: Context, var listener:EditImageListener, var gli
 
         }
 
+    }
+
+    companion object{
+        var selectedPosition = 0
     }
 }

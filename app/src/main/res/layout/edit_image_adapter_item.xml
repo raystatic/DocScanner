@@ -5,13 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="150dp"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitXY"
         android:background="@drawable/edit_image_selected_background"
         android:src="@mipmap/ic_launcher"
         android:id="@+id/imgEditItem"/>

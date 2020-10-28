@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.docscanner.data.models.Document
+import com.example.docscanner.ui.adapters.EditImageAdapter
 
 class CameraViewModel : ViewModel(){
 
@@ -15,5 +16,18 @@ class CameraViewModel : ViewModel(){
     fun updateDocList(docList:List<Document>){
         _docList.postValue(docList)
     }
+
+    fun removeItemAtPosition(selectedPosition: Int) {
+        val temp = _docList.value as MutableList
+        if (temp.isNotEmpty()){
+            temp.removeAt(selectedPosition)
+            _docList.postValue(temp)
+            if (EditImageAdapter.selectedPosition>0)
+                EditImageAdapter.selectedPosition--
+        }
+    }
+
+    val currentFragmentVisible = MutableLiveData<Int>()
+
 
 }

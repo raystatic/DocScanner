@@ -20,8 +20,11 @@ import com.example.docscanner.data.models.Document
 import com.example.docscanner.other.CameraXUtility
 import com.example.docscanner.other.Constants
 import com.example.docscanner.other.Utility
+import com.example.docscanner.other.ViewExtension.hide
+import com.example.docscanner.other.ViewExtension.show
 import com.example.docscanner.ui.viewmodels.CameraViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.capture_image_fragment.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -120,6 +123,8 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
 
 
     private fun takePhoto() {
+        fabCapture.isEnabled = false
+        captureProgress.show()
         val imageCapture = imageCapture
 
         val photoFile = File(
@@ -134,18 +139,21 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
                 outputOptions, ContextCompat.getMainExecutor(requireContext()), object : ImageCapture.OnImageSavedCallback {
             override fun onError(exc: ImageCaptureException) {
                 Timber.d("Photo capture failed: ${exc.message} : $exc")
+                fabCapture.isEnabled = true
+                captureProgress.hide()
             }
 
             override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                 val savedUri = Uri.fromFile(photoFile)
                 val msg = "Photo capture succeeded: $savedUri"
                 Timber.d(msg)
-                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                 val bmp = CameraXUtility.getBitmapFromUri(savedUri, requireContext())
                 val bitmap = CameraXUtility.rotatateImageIfRequired(bmp, savedUri)
                 val doc = Document(bitmap)
                 docList.add(doc)
                 vm.updateDocList(docList)
+                fabCapture.isEnabled = true
+                captureProgress.hide()
             }
         })
     }
@@ -190,6 +198,8 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callback = context as CaptureImageInteractor
+
+        vm.currentFragmentVisible.value = 0
     }
 
 }

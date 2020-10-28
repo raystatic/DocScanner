@@ -3,6 +3,7 @@ package com.example.docscanner.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -43,21 +44,32 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
         Timber.d("vm : $vm")
 
         imgBack.setOnClickListener {
-            Timber.d("edit image: $callback")
             callback.onNavigateToCapture()
         }
 
+        imgDelete.setOnClickListener {
+            removeItemFromDocList()
+        }
+
+    }
+
+    private fun removeItemFromDocList() {
+        vm.removeItemAtPosition(EditImageAdapter.selectedPosition)
     }
 
     private fun subscribeToObservers() {
         vm.docList.observe(requireActivity(), Observer {
             it?.let {
                 if (imgEditDoc!=null){
-                    editImageAdapter.setData(it)
-                    editImageAdapter.setCurrentPosition(0)
-                    glide.apply {
-                        load(it[0].bitmap)
-                                .into(imgEditDoc)
+                    if (it.isNotEmpty()){
+                        editImageAdapter.setData(it)
+                        glide.apply {
+                            load(it[EditImageAdapter.selectedPosition].bitmap)
+                                    .into(imgEditDoc)
+                        }
+                    }else{
+                        Toast.makeText(requireContext(), "Pages finished", Toast.LENGTH_SHORT).show()
+                        callback.onNavigateToCapture()
                     }
                 }
             }
@@ -86,6 +98,8 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callback = context as EditImageInteractor
+
+        vm.currentFragmentVisible.value = 1
     }
 
 }
