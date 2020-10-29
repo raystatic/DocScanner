@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.docscanner.data.models.Document
 import com.example.docscanner.ui.adapters.EditImageAdapter
+import com.example.docscanner.ui.fragments.EditImageFragment
 
 class CameraViewModel : ViewModel(){
 
@@ -22,7 +23,7 @@ class CameraViewModel : ViewModel(){
         if (temp.isNotEmpty()){
             temp.removeAt(selectedPosition)
             _docList.postValue(temp)
-            if (EditImageAdapter.selectedPosition>0)
+            if (EditImageAdapter.selectedPosition>0 && EditImageFragment.retakePicture==-1)
                 EditImageAdapter.selectedPosition--
         }
     }

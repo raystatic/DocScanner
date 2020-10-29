@@ -20,7 +20,6 @@ import com.example.docscanner.ui.adapters.EditImageAdapter
 import com.example.docscanner.ui.viewmodels.CameraViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.edit_images_fragment.*
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -51,10 +50,15 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
             removeItemFromDocList()
         }
 
-        imgCrop.setOnClickListener {
-            currentBitmap?.let {
-                //getCroppedImage(it)
-            }
+        imgDone.setOnClickListener {
+
+        }
+
+
+        imgRetake.setOnClickListener {
+            retakePicture = EditImageAdapter.selectedPosition
+            removeItemFromDocList()
+            callback.onNavigateToCapture()
         }
 
     }
@@ -212,7 +216,7 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
     companion object{
 
         private var currentBitmap:Bitmap ?= null
-
+        var retakePicture:Int = -1
     }
 
 }

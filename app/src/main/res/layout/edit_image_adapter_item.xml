@@ -14,7 +14,6 @@
         android:layout_margin="5dp"
         android:scaleType="fitXY"
         android:background="@drawable/edit_image_selected_background"
-        android:src="@mipmap/ic_launcher"
         android:id="@+id/imgEditItem"/>
 
 

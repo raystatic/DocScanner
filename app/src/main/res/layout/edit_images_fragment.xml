@@ -26,9 +26,23 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imgCrop"
+            android:id="@+id/imgRetake"
             android:padding="10dp"
-            android:text="crop"
+            android:text="Retake this Snap"
+            android:textColor="@color/white"
+            android:layout_marginEnd="10dp"
+            android:textSize="12sp"
+            android:backgroundTint="@color/dark_orange_light"
+            android:layout_toStartOf="@+id/imgDone"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgDone"
+            android:padding="10dp"
+            android:text="Done"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/dark_green_light"
             android:layout_toStartOf="@+id/imgDelete"/>
 
         <ImageView
@@ -58,7 +72,6 @@
                 android:layout_height="match_parent"
                 android:id="@+id/imgEditDoc"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_launcher"
                 android:layout_margin="10dp"
                 android:adjustViewBounds="true"/>
 

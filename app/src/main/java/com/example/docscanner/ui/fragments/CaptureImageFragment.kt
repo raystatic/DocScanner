@@ -81,6 +81,10 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
                         load(document.bitmap)
                                 .into(docThumb)
                     }
+                    if (isImageRetaken){
+                        isImageRetaken = false
+                        callback.onThumbClicked()
+                    }
                 }
             }
         })
@@ -150,7 +154,13 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
                 val bmp = CameraXUtility.getBitmapFromUri(savedUri, requireContext())
                 val bitmap = CameraXUtility.rotatateImageIfRequired(bmp, savedUri)
                 val doc = Document(bitmap)
-                docList.add(doc)
+                if (EditImageFragment.retakePicture != -1){
+                    docList.add(EditImageFragment.retakePicture, doc)
+                    EditImageFragment.retakePicture = -1
+                    isImageRetaken = true
+                }else{
+                    docList.add(doc)
+                }
                 vm.updateDocList(docList)
                 fabCapture.isEnabled = true
                 captureProgress.hide()
@@ -200,6 +210,10 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
         callback = context as CaptureImageInteractor
 
         vm.currentFragmentVisible.value = 0
+    }
+
+    companion object{
+        private var isImageRetaken = false
     }
 
 }
