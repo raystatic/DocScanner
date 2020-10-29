@@ -32,6 +32,7 @@ import com.itextpdf.text.pdf.PdfWriter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.create_pdf_confirmation.view.*
 import kotlinx.android.synthetic.main.edit_images_fragment.*
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -99,9 +100,6 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
             }
 
             btnDoneConfirm.setOnClickListener {
-                linCreatingPdf.show()
-                btnCancelConfirm.isEnabled = false
-                btnDoneConfirm.isEnabled = false
                 createPdf()
             }
 
@@ -123,130 +121,20 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
                         CameraXUtility.FILENAME, Locale.US
                     ).format(System.currentTimeMillis())}.pdf"
 
-                    val document = com.itextpdf.text.Document()
-                    val writer = PdfWriter.getInstance(document, FileOutputStream(filePath))
+                    vm.createPdf(docs,filePath)
 
-                    document.open()
-
-                    docs.forEachIndexed { index, doc ->
-                        val quality = 30
-                        val bmp: Bitmap = doc.bitmap!!
-                        val stream = ByteArrayOutputStream()
-                        bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                        val byteArray: ByteArray = stream.toByteArray()
-                        bmp.recycle()
-                        val image = Image.getInstance(byteArray)
-                        val qualityMod = quality * 0.09
-                        image.compressionLevel = qualityMod.toInt()
-                        image.border = Rectangle.BOX
-                        image.borderWidth = 1f
-                        image.rotate()
-
-                        val bmOptions: BitmapFactory.Options = BitmapFactory.Options()
-                        val bitmap = BitmapFactory.decodeFile(doc.photoUri.toString(), bmOptions)
-
-                        val pageWidth: Float =
-                            document.pageSize.width - (document.leftMargin() + document.rightMargin())
-                        val pageHeight: Float =
-                            document.pageSize.height - (document.bottomMargin() + document.topMargin())
-
-                        image.scaleToFit(pageWidth, pageHeight)
-
-                        image.setAbsolutePosition(
-                            (document.pageSize.width - image.scaledWidth) / 2,
-                            (document.pageSize.height - image.scaledHeight) / 2)
-
-                        ColumnText.showTextAligned(writer.getDirectContent(),
-                            Element.ALIGN_BOTTOM,
-                            Phrase(String.format("Page %d of %d", writer.pageNumber, docs.size)),
-                        ((document.pageSize.right + document.pageSize.left) / 2),
-                            document.pageSize.bottom + 25, 0f)
-
-                        document.add(image)
-                        document.newPage()
-
-                    }
+                    vm.isPdfCreating.observe(viewLifecycleOwner, Observer { isPdfCreating ->
+                        if (isPdfCreating){
+                            confirmDialogView.linCreatingPdf.show()
+                            confirmDialogView.btnCancelConfirm.isEnabled = false
+                            confirmDialogView.btnDoneConfirm.isEnabled = false
+                        }else{
+                            confirmDialogView.linCreatingPdf.hide()
+                            confirmDialog.cancel()
+                        }
+                    })
 
 
-                    document.close()
-
-                  //  val firstImage = Image.getInstance(docs[0].photoPath)
-
-
-//                    val document = com.itextpdf.text.Document()
-//                    PdfWriter.getInstance(document, FileOutputStream(filePath))
-//                    document.open()
-//                    docs.forEach {doc->
-//                        val image = Image.getInstance(doc.photoPath)
-//                        val scaler: Float =
-//                            (document.pageSize.width - document.leftMargin()
-//                                    - document.rightMargin() - 0) / image.width * 100 // 0 means you have no indentation. If you have any, change it.
-//                      //  image.scalePercent(0f)
-//                        image.alignment = Image.ALIGN_CENTER or Image.ALIGN_TOP
-//                        image.setAbsolutePosition(
-//                            (document.pageSize.width - image.scaledWidth) / 2.0f,
-//                            (document.pageSize.height - image.scaledHeight) / 2.0f
-//                        )
-//
-//                        document.add(image)
-//                       // document.pageSize = image
-//                        document.newPage()
-//                        //image.setAbsolutePosition(0f,0f)
-//                       // document.add(image)
-//                    }
-//
-//                    document.close()
-
-
-                    // Create a PdfDocument with a page of the same size as the image
-//                    val document: PdfDocument = PdfDocument()
-//
-//                    docs.forEachIndexed { index, doc ->
-//                        val bitmap = doc.bitmap
-//                        val pageInfo: PdfDocument.PageInfo  = PdfDocument.PageInfo.Builder(bitmap?.width!!, bitmap.height, index+1).create()
-//                        val page: PdfDocument.Page  = document.startPage(pageInfo)
-//
-//                        // Draw the bitmap onto the page
-//                        val canvas: Canvas = page.canvas
-//                        canvas.drawBitmap(bitmap, 0f, 0f, null)
-//                        document.finishPage(page)
-//
-//                        // Write the PDF file to a file
-//
-//                    }
-//
-//                    document.writeTo( FileOutputStream(filePath))
-//
-//                    document.close()
-
-  //                  val fOut = FileOutputStream(filePath)
-//                    val document = PdfDocument()
-//
-//                    var i = 0
-//                    docs.forEach {
-//                        i++
-//                        val bitmap = BitmapFactory.decodeFile(it.photoPath)
-//                        val out = ByteArrayOutputStream()
-//                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-//                        val decoded =
-//                            BitmapFactory.decodeStream(ByteArrayInputStream(out.toByteArray()))
-//                        val pageInfo = PdfDocument.PageInfo.Builder(decoded.width, decoded.height, i).create()
-//                        val page = document.startPage(pageInfo)
-//                        val canvas = page?.canvas
-//                        val paint = Paint()
-//                        canvas?.drawPaint(paint)
-//                        paint.color = Color.BLUE;
-//                        canvas?.drawBitmap(decoded, 0f, 0f, null)
-//                        document.finishPage(page)
-//                        bitmap.recycle()
-//                    }
-//                    document.writeTo(fOut)
-//                    document.close()
-
-
-
-                    confirmDialogView.linCreatingPdf.hide()
-                    confirmDialog.cancel()
                 }
             }
         })

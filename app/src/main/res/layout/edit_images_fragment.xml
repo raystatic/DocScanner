@@ -41,6 +41,7 @@
             android:id="@+id/imgDone"
             android:padding="10dp"
             android:text="Done"
+            android:textSize="12sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/dark_green_light"
             android:layout_toStartOf="@+id/imgDelete"/>
