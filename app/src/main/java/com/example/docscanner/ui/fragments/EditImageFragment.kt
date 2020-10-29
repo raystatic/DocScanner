@@ -133,8 +133,6 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
                             confirmDialog.cancel()
                         }
                     })
-
-
                 }
             }
         })

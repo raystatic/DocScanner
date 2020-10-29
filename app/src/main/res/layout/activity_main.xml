@@ -43,7 +43,8 @@
         android:layout_height="match_parent"
         app:layout_anchor="@id/appBarLayout"
         android:layout_marginTop="?actionBarSize"
-        android:layout_marginBottom="?actionBarSize">
+        android:layout_marginBottom="?actionBarSize"
+        android:visibility="gone">
 
         <fragment
             android:id="@+id/navHostFragment"
@@ -62,6 +63,7 @@
         android:layout_gravity="bottom"
         android:id="@+id/bottomAppBar"
         app:fabCradleMargin="10dp"
+        android:visibility="gone"
         app:fabCradleRoundedCornerRadius="20dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -74,11 +76,28 @@
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchor="@id/appBarLayout"
+        android:layout_marginTop="?actionBarSize"
+        android:id="@+id/relHome">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvPdfFiles"
+            tools:listitem="@layout/pdf_item_layout"/>
+
+    </RelativeLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fab"
         android:src="@drawable/ic_camera_to_take_photos"
-        app:layout_anchor="@id/bottomAppBar" />
+        app:layout_anchorGravity="bottom|right"
+        app:layout_anchor="@id/relHome"
+        android:layout_margin="25dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
