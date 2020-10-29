@@ -1,13 +1,15 @@
 package com.example.docscanner.other
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Matrix
+import android.graphics.*
 import android.media.ExifInterface
 import android.net.Uri
 import android.provider.MediaStore
 import com.example.docscanner.R
+import com.itextpdf.text.Rectangle
 import java.io.File
+import kotlin.math.abs
+
 
 object CameraXUtility {
 
@@ -16,6 +18,10 @@ object CameraXUtility {
 
     fun getBitmapFromUri(uri: Uri, context: Context): Bitmap {
         return MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+    }
+
+    fun insertBitmapAtUri(uri: Uri, context: Context, bitmap: Bitmap) {
+        MediaStore.Images.Media.insertImage(context.contentResolver, bitmap,"title",null)
     }
 
 
@@ -45,6 +51,37 @@ object CameraXUtility {
         val rotatedImg = Bitmap.createBitmap(img, 0, 0, img.width, img.height, matrix, true)
         img.recycle()
         return rotatedImg
+    }
+
+    fun toGrayscale(bmpOriginal: Bitmap): Bitmap? {
+        val height: Int = bmpOriginal.height
+        val width: Int = bmpOriginal.width
+        val bmpGrayscale = Bitmap.createBitmap(width, height, bmpOriginal.config)
+        val c = Canvas(bmpGrayscale)
+        val paint = Paint()
+        val cm = ColorMatrix()
+        cm.setSaturation(0f)
+        val f = ColorMatrixColorFilter(cm)
+        paint.colorFilter = f
+        c.drawBitmap(bmpOriginal, 0f, 0f, paint)
+        return bmpGrayscale
+    }
+
+    fun calculateFitSize(
+        originalWidth: Float,
+        originalHeight: Float,
+        documentSize: Rectangle
+    ): Rectangle? {
+        val widthChange: Float = (originalWidth - documentSize.width) / originalWidth
+        val heightChange: Float =
+            (originalHeight - documentSize.height) / originalHeight
+        val changeFactor = widthChange.coerceAtLeast(heightChange)
+        val newWidth = originalWidth - originalWidth * changeFactor
+        val newHeight = originalHeight - originalHeight * changeFactor
+        return Rectangle(
+            abs(newWidth),
+            abs(newHeight)
+        )
     }
 
 }

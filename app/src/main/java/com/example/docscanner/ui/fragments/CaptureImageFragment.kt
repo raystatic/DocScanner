@@ -153,7 +153,8 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
                 Timber.d(msg)
                 val bmp = CameraXUtility.getBitmapFromUri(savedUri, requireContext())
                 val bitmap = CameraXUtility.rotatateImageIfRequired(bmp, savedUri)
-                val doc = Document(bitmap)
+                //bitmap?.let { CameraXUtility.insertBitmapAtUri(savedUri,requireContext(), it) }
+                val doc = Document(bitmap,savedUri)
                 if (EditImageFragment.retakePicture != -1){
                     docList.add(EditImageFragment.retakePicture, doc)
                     EditImageFragment.retakePicture = -1

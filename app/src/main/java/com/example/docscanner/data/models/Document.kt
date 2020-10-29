@@ -8,5 +8,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Document(
-        val bitmap:Bitmap?
+        val bitmap:Bitmap?,
+        val photoUri:Uri?
 ):Parcelable
