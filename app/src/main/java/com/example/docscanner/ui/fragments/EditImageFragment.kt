@@ -1,10 +1,7 @@
 package com.example.docscanner.ui.fragments
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Matrix
-import android.graphics.PointF
-import android.graphics.RectF
+import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.Gravity
@@ -53,6 +50,42 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
         imgDelete.setOnClickListener {
             removeItemFromDocList()
         }
+
+        imgCrop.setOnClickListener {
+            currentBitmap?.let {
+                //getCroppedImage(it)
+            }
+        }
+
+    }
+
+    private fun loadBitmapWithGlide(bitmap: Bitmap){
+        glide.apply {
+            load(bitmap)
+                    .into(imgEditDoc)
+        }
+    }
+
+    private fun getCroppedImage(bitmap: Bitmap){
+
+        val resultBitmap = Bitmap.createBitmap(bitmap.width,bitmap.height, bitmap.config)
+
+        val canvas = Canvas(resultBitmap)
+        val paint = Paint()
+        paint.isAntiAlias = true
+        val path =  Path()
+        val points = polygonView.getPoints()
+        path.lineTo(points?.get(0)?.x!!, points[0]?.y!!)
+        path.lineTo(points[1]?.x!!, points[0]?.y!!)
+        path.lineTo(points[2]?.x!!, points[0]?.y!!)
+        path.lineTo(points[3]?.x!!, points[0]?.y!!)
+
+        canvas.drawPath(path, paint)
+
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawBitmap(bitmap,0f,0f,paint)
+
+        glide.load(resultBitmap).into(imgEditDoc)
 
     }
 
@@ -126,15 +159,17 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
                 if (imgEditDoc!=null){
                     if (it.isNotEmpty()){
                         editImageAdapter.setData(it)
-//                        glide.apply {
-//                            load(it[EditImageAdapter.selectedPosition].bitmap)
-//                                    .into(imgEditDoc)
+//                        sourceFrame.post {
+//                            it[EditImageAdapter.selectedPosition].bitmap?.let { bitmap ->
+//                                loadBitmap(bitmap)
+//                                currentBitmap = bitmap
+//                            }
 //                        }
-                        sourceFrame.post {
-                            it[EditImageAdapter.selectedPosition].bitmap?.let { bitmap ->
-                                loadBitmap(bitmap)
-                            }
-                        }                    }else{
+                        it[EditImageAdapter.selectedPosition].bitmap?.let { it1 ->
+                            loadBitmapWithGlide(it1)
+                            currentBitmap = it1
+                        }
+                    }else{
                         Toast.makeText(requireContext(), "Pages finished", Toast.LENGTH_SHORT).show()
                         callback.onNavigateToCapture()
                     }
@@ -152,14 +187,14 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
     }
 
     override fun onImageClicked(document: Document) {
-//        glide.apply {
-//            load(document.bitmap)
-//                    .into(imgEditDoc)
+//        sourceFrame.post {
+//            document.bitmap?.let {
+//                loadBitmap(it)
+//                currentBitmap = it
+//            }
 //        }
-        sourceFrame.post {
-            document.bitmap?.let {
-                loadBitmap(it)
-            }
+        document.bitmap?.let {
+            loadBitmapWithGlide(it)
         }
     }
 
@@ -172,6 +207,12 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
         callback = context as EditImageInteractor
 
         vm.currentFragmentVisible.value = 1
+    }
+
+    companion object{
+
+        private var currentBitmap:Bitmap ?= null
+
     }
 
 }

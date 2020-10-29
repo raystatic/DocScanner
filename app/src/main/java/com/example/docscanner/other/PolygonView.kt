@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.example.docscanner.R
+import timber.log.Timber
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.abs
@@ -138,7 +139,7 @@ class PolygonView: FrameLayout{
         return pointFMap?.size == 4
     }
 
-    private fun getPoints(): Map<Int, PointF>? {
+    fun getPoints(): Map<Int, PointF>? {
         val points: MutableList<PointF> = ArrayList()
         points.add(PointF(pointer1.x, pointer1.y))
         points.add(PointF(pointer2.x, pointer2.y))
@@ -169,6 +170,7 @@ class PolygonView: FrameLayout{
                 index = 3
             }
             orderedPoints[index] = it
+            Timber.d("points values: $index")
         }
 
         return orderedPoints
