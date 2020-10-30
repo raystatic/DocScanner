@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.example.docscanner.R
 import com.example.docscanner.data.local.PdfFile
@@ -23,6 +24,8 @@ class PdfItemAdapter(var pdfItemListener: PdfItemListener) : RecyclerView.Adapte
 
     interface PdfItemListener{
         fun openPdf(file: File)
+        fun rename(item: PdfFile?)
+        fun deleteFile(item: PdfFile?)
     }
 
     fun setData(list: List<PdfFile>){
@@ -56,12 +59,37 @@ class PdfItemAdapter(var pdfItemListener: PdfItemListener) : RecyclerView.Adapte
             }
 
             Timber.d("last modified time : ${item?.dateCreated}")
-            val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US)
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.US)
             val dateString = formatter.format(item?.dateCreated?.toLong()?.let { Date(it) })
             tvPdfDateCreated.text = "Created on: $dateString"
 
             setOnClickListener {
                 item?.file?.let { it1 -> pdfItemListener.openPdf(it1) }
+            }
+
+            imgPopup.apply {
+                setOnClickListener {
+                    val popup = PopupMenu(context, this)
+
+                    popup.menuInflater
+                        .inflate(R.menu.pdf_item_menu, popup.menu)
+
+                    popup.setOnMenuItemClickListener {
+                        when(it.itemId){
+                            R.id.miRename ->{
+                                pdfItemListener.rename(item)
+                                return@setOnMenuItemClickListener true
+                            }
+                            R.id.miDelete -> {
+                                pdfItemListener.deleteFile(item)
+                                return@setOnMenuItemClickListener true
+                            }
+                            else -> return@setOnMenuItemClickListener false
+                        }
+                    }
+
+                    popup.show()
+                }
             }
 
         }

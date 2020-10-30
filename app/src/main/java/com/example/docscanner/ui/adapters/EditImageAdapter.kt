@@ -2,20 +2,18 @@ package com.example.docscanner.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.SimpleTarget
 import com.example.docscanner.R
 import com.example.docscanner.data.models.Document
-import com.example.docscanner.other.CameraXUtility
-import com.example.docscanner.other.Utility
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.edit_image_adapter_item.view.*
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.pdf_item_layout.view.*
+
 
 class EditImageAdapter(var ctx: Context, var listener:EditImageListener, var glide:RequestManager) : RecyclerView.Adapter<EditImageAdapter.EditImageViewHolder>(){
 
@@ -76,6 +74,8 @@ class EditImageAdapter(var ctx: Context, var listener:EditImageListener, var gli
                 selectedPosition = position
                 notifyDataSetChanged()
             }
+
+
 
         }
 

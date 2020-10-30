@@ -12,7 +12,7 @@ class PdfFileRepository @Inject constructor(
 
     fun getAllPdfFiles() = pdfFileDao.getAllPdfFiles()
 
-    suspend fun deletePdfFileById(id:Int) = pdfFileDao.deletePdfById(id)
+    suspend fun deletePdfFileById(id: String) = pdfFileDao.deletePdfById(id)
 
     suspend fun deleteAllPdfFiles() = pdfFileDao.deleteAllPdfFiles()
 

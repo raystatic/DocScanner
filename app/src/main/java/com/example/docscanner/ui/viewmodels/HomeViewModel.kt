@@ -1,14 +1,11 @@
 package com.example.docscanner.ui.viewmodels
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.docscanner.data.local.PdfFile
 import com.example.docscanner.data.repositories.PdfFileRepository
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.File
 
 class HomeViewModel @ViewModelInject constructor(
@@ -22,7 +19,7 @@ class HomeViewModel @ViewModelInject constructor(
         pdfFileRepository.insertPdfFile(pdfFile)
     }
 
-    fun deletePdfFileById(id:Int) = viewModelScope.launch {
+    fun deletePdfFileById(id: String) = viewModelScope.launch {
         pdfFileRepository.deletePdfFileById(id)
     }
 
@@ -39,7 +36,7 @@ class HomeViewModel @ViewModelInject constructor(
             }else{
                 if (file.name.endsWith(".pdf")){
                     filesList.add(file)
-                    val pdfFile = PdfFile(fileName = file.name,dateCreated = file.lastModified().toString(),file = file)
+                    val pdfFile = PdfFile(fileName = file.name,dateCreated = file.lastModified().toString(),file = file, id = file.absolutePath)
                     insertPdfFile(pdfFile)
                 }
             }

@@ -16,7 +16,7 @@ interface PdfFileDao{
     fun getAllPdfFiles():LiveData<List<PdfFile>>
 
     @Query("DELETE from pdf_file WHERE id=:pdfFileId")
-    suspend fun deletePdfById(pdfFileId:Int)
+    suspend fun deletePdfById(pdfFileId: String)
 
     @Query("DELETE from pdf_file")
     suspend fun deleteAllPdfFiles()

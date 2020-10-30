@@ -10,8 +10,9 @@ import java.util.*
 @Entity(tableName = "pdf_file")
 data class PdfFile(
 
-    @PrimaryKey(autoGenerate = true)
-    val id:Int = 0,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    val id:String,
 
     @ColumnInfo(name = "filename")
     val fileName:String,

@@ -10,12 +10,12 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.docscanner.R
+import com.example.docscanner.data.local.PdfFile
 import com.example.docscanner.other.CameraXUtility
 import com.example.docscanner.ui.adapters.PdfItemAdapter
 import com.example.docscanner.ui.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import timber.log.Timber
 import java.io.File
 
 
@@ -88,6 +88,18 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, "No application found to open pdf", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun rename(item: PdfFile?) {
+
+    }
+
+    override fun deleteFile(item: PdfFile?) {
+        val file = File(item?.file?.toURI())
+        file.delete()
+        item?.id?.let {
+            vm.deletePdfFileById(it)
         }
     }
 }
