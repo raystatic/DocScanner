@@ -13,18 +13,19 @@ class HomeViewModel : ViewModel(){
     val pdfFiles:LiveData<ArrayList<File>>
         get() = _pdfFiles
 
-    fun fetchPdfFiles(dir:File, filesList:ArrayList<File>){
+    fun fetchPdfFiles(dir:File){
+        val filesList = ArrayList<File>()
         val files = dir.listFiles()
         files?.forEach {file ->
             if (file.isDirectory){
-                fetchPdfFiles(file, filesList)
+                fetchPdfFiles(file)
             }else{
                 if (file.name.endsWith(".pdf")){
                     filesList.add(file)
-                    _pdfFiles.postValue(filesList)
                 }
             }
         }
+        _pdfFiles.postValue(filesList)
     }
 
 }

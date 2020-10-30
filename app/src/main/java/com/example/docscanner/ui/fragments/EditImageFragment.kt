@@ -30,6 +30,7 @@ import com.itextpdf.text.Rectangle
 import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.create_pdf_confirmation.view.*
 import kotlinx.android.synthetic.main.edit_images_fragment.*
 import timber.log.Timber
@@ -131,6 +132,7 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
                         }else{
                             confirmDialogView.linCreatingPdf.hide()
                             confirmDialog.cancel()
+                            callback.onFinish()
                         }
                     })
                 }
@@ -279,6 +281,7 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
 
     interface EditImageInteractor{
         fun onNavigateToCapture()
+        fun onFinish()
     }
 
     override fun onAttach(context: Context) {

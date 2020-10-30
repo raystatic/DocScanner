@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
 
     override fun onResume() {
         super.onResume()
-        vm.fetchPdfFiles(CameraXUtility.getOutputDirectory(this),filesList)
+        vm.fetchPdfFiles(CameraXUtility.getOutputDirectory(this))
     }
 
     private fun setUpRv() {
@@ -65,9 +65,7 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
     private fun subscribeToObservers() {
         vm.pdfFiles.observe(this, Observer {
             it?.let {files->
-                Timber.d("files: $files")
                 pdfItemAdapter.setData(files)
-                filesList =files
             }
         })
     }

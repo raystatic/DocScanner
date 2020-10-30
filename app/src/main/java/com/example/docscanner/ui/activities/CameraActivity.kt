@@ -34,6 +34,10 @@ class CameraActivity : AppCompatActivity(),
         cameraNavHostFragment.findNavController().navigate(R.id.action_to_captureImageFragment)
     }
 
+    override fun onFinish() {
+        finish()
+    }
+
     override fun onBackPressed() {
         if (cameraNavHostFragment.findNavController().currentDestination?.id == R.id.captureImageFragment)
             finish()
