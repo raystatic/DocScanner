@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DocScanner">
+        <activity android:name=".ui.activities.OpenFromGalleryActivity"></activity>
         <activity android:name=".ui.activities.CameraActivity" />
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
@@ -36,7 +37,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

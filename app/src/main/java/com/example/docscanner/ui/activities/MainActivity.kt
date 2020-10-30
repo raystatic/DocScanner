@@ -2,7 +2,6 @@ package com.example.docscanner.ui.activities
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -35,11 +34,20 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
 
         subscribeToObservers()
 
-        fab.setOnClickListener {
+        menu_cam.setOnClickListener {
             navigateToCameraFragment()
         }
 
+        menu_gallery.setOnClickListener {
+            openGallery()
+        }
+
     }
+
+    private fun openGallery() {
+        startActivity(Intent(this,OpenFromGalleryActivity::class.java))
+    }
+
 
     override fun onResume() {
         super.onResume()

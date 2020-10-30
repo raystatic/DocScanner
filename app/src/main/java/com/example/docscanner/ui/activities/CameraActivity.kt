@@ -1,11 +1,10 @@
 package com.example.docscanner.ui.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.docscanner.R
 import com.example.docscanner.ui.fragments.CaptureImageFragment
@@ -13,8 +12,6 @@ import com.example.docscanner.ui.fragments.EditImageFragment
 import com.example.docscanner.ui.viewmodels.CameraViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_camera.*
-import kotlinx.android.synthetic.main.activity_main.*
-import timber.log.Timber
 
 @AndroidEntryPoint
 class CameraActivity : AppCompatActivity(),
@@ -28,6 +25,7 @@ class CameraActivity : AppCompatActivity(),
         setContentView(R.layout.activity_camera)
 
     }
+
     override fun onThumbClicked() {
         cameraNavHostFragment.findNavController().navigate(R.id.action_to_editImageFragment)
     }

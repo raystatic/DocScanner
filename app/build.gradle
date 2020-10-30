@@ -107,5 +107,6 @@ dependencies {
 
     implementation 'com.tom_roush:pdfbox-android:1.8.10.1'
 
+    implementation 'com.github.clans:fab:1.6.4'
 
 }
