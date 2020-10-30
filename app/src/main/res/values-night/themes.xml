@@ -14,4 +14,9 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
+
+    <style name="PdfItemTheme" parent="Theme.DocScanner">
+        <item name="android:colorBackground">@color/black</item>
+    </style>
+
 </resources>

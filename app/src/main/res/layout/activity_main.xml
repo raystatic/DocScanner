@@ -13,7 +13,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -80,7 +81,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_anchor="@id/appBarLayout"
-        android:layout_marginTop="?actionBarSize"
         android:id="@+id/relHome">
 
         <androidx.recyclerview.widget.RecyclerView
