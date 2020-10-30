@@ -64,6 +64,9 @@ class OpenFromGalleryActivity : AppCompatActivity() {
             val imagesPath: List<String>? = data?.getStringExtra("data")?.split("\\|")
             Timber.d("imagesList: $imagesPath")
 
+            if (data?.data == null && data?.clipData == null)
+                finish()
+
             data?.data.let {
                 it?.let { it1 ->
                     _docList.add(Document(CameraXUtility.getBitmapFromUri(it1,this),it1))
@@ -86,6 +89,8 @@ class OpenFromGalleryActivity : AppCompatActivity() {
                 ).format(System.currentTimeMillis())}.pdf"
                 vm.createPdf(_docList,filePath)
             }
+        }else{
+            finish()
         }
     }
 }

@@ -35,10 +35,12 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
         subscribeToObservers()
 
         menu_cam.setOnClickListener {
+            menu_action.close(true)
             navigateToCameraFragment()
         }
 
         menu_gallery.setOnClickListener {
+            menu_action.close(true)
             openGallery()
         }
 

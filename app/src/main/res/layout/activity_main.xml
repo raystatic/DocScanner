@@ -92,20 +92,19 @@
     </RelativeLayout>
 
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/menu"
+        android:id="@+id/menu_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/relHome"
         app:layout_anchorGravity="bottom|end"
         android:layout_margin="25dp"
         app:menu_fab_size="normal"
+        app:menu_colorPressed="@color/dark_green_light"
         app:menu_showShadow="true"
-        app:menu_shadowColor="#66000000"
         app:menu_shadowRadius="4dp"
         app:menu_shadowXOffset="1dp"
         app:menu_shadowYOffset="3dp"
         app:menu_colorNormal="@color/dark_green_light"
-        app:menu_colorRipple="#99FFFFFF"
         app:menu_animationDelayPerItem="50"
         app:menu_icon="@drawable/fab_add"
         app:menu_buttonSpacing="0dp"
@@ -117,7 +116,6 @@
         app:menu_labels_paddingBottom="4dp"
         app:menu_labels_paddingLeft="8dp"
         app:menu_labels_padding="8dp"
-        app:menu_labels_textColor="#FFFFFF"
         app:menu_labels_textSize="14sp"
         app:menu_labels_cornerRadius="3dp"
         app:menu_labels_showShadow="true"
@@ -135,6 +133,7 @@
             app:fab_size="normal"
             android:src="@drawable/ic_stat_camera"
             android:padding="10dp"
+            app:fab_colorPressed="@color/light_orange_light"
             app:fab_colorNormal="@color/light_orange_light"
             />
 
@@ -145,6 +144,7 @@
             app:fab_size="normal"
             android:src="@drawable/ic_stat_gallery"
             android:padding="10dp"
+            app:fab_colorPressed="@color/light_orange_light"
             app:fab_colorNormal="@color/light_orange_light"
             />
 
