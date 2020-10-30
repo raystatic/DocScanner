@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
 
     private val vm:HomeViewModel by viewModels()
     private lateinit var pdfItemAdapter: PdfItemAdapter
-    private var filesList=ArrayList<File>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

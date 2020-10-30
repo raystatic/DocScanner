@@ -2,11 +2,14 @@ package com.example.docscanner.ui.viewmodels
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.docscanner.data.local.PdfFile
 import com.example.docscanner.data.models.Document
+import com.example.docscanner.data.repositories.PdfFileRepository
 import com.example.docscanner.other.CameraXUtility
 import com.example.docscanner.ui.adapters.EditImageAdapter
 import com.example.docscanner.ui.fragments.EditImageFragment
@@ -93,7 +96,6 @@ class CameraViewModel : ViewModel(){
 
         withContext(Dispatchers.Main){
             _pdfCreating.postValue(false)
-
         }
 
     }

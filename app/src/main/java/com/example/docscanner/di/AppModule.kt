@@ -1,8 +1,11 @@
 package com.example.docscanner.di
 
 import android.content.Context
+import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.example.docscanner.data.local.DocScannerDb
+import com.example.docscanner.other.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +23,21 @@ object AppModule {
     fun provideGlide(
             @ApplicationContext context: Context
     ): RequestManager = Glide.with(context)
+
+    @Singleton
+    @Provides
+    fun provideRunningDatabase(
+        @ApplicationContext app:Context
+    ) = Room.databaseBuilder(
+        app,
+        DocScannerDb::class.java,
+        Constants.DOCSCANNER_DB_NAME
+    ).fallbackToDestructiveMigration()
+        .build()
+
+    @Singleton
+    @Provides
+    fun providePdfDao(db: DocScannerDb) = db.getPdfDao()
+
 
 }

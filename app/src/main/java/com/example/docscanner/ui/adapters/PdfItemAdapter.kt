@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.docscanner.R
+import com.example.docscanner.data.local.PdfFile
 import kotlinx.android.synthetic.main.pdf_item_layout.view.*
 import timber.log.Timber
 import java.io.File
@@ -18,13 +19,13 @@ import java.util.*
 
 class PdfItemAdapter(var pdfItemListener: PdfItemListener) : RecyclerView.Adapter<PdfItemAdapter.PdfItemViewHolder>(){
 
-    private var data:List<File>?=null
+    private var data:List<PdfFile>?=null
 
     interface PdfItemListener{
         fun openPdf(file: File)
     }
 
-    fun setData(list: List<File>){
+    fun setData(list: List<PdfFile>){
         data = list
         notifyDataSetChanged()
     }
@@ -44,7 +45,7 @@ class PdfItemAdapter(var pdfItemListener: PdfItemListener) : RecyclerView.Adapte
 
         holder.itemView.apply {
             tvPdfTitle.apply {
-                text = item?.name
+                text = item?.fileName
                 ellipsize = TextUtils.TruncateAt.MARQUEE
                 setSingleLine()
                 marqueeRepeatLimit = 10
@@ -54,13 +55,13 @@ class PdfItemAdapter(var pdfItemListener: PdfItemListener) : RecyclerView.Adapte
                 requestFocus()
             }
 
-            Timber.d("last modified time : ${item?.lastModified()}")
-            val formatter = SimpleDateFormat("dd/MM/yyyy")
-            val dateString = formatter.format( Date(item?.lastModified()!!))
-            tvPdfDateCreated.text = "Last Modified: $dateString"
+            Timber.d("last modified time : ${item?.dateCreated}")
+            val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US)
+            val dateString = formatter.format(item?.dateCreated?.toLong()?.let { Date(it) })
+            tvPdfDateCreated.text = "Created on: $dateString"
 
             setOnClickListener {
-                item.let { it1 -> pdfItemListener.openPdf(it1) }
+                item?.file?.let { it1 -> pdfItemListener.openPdf(it1) }
             }
 
         }

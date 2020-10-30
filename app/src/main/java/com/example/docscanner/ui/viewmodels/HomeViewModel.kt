@@ -1,17 +1,34 @@
 package com.example.docscanner.ui.viewmodels
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.docscanner.data.local.PdfFile
+import com.example.docscanner.data.repositories.PdfFileRepository
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
-class HomeViewModel : ViewModel(){
+class HomeViewModel @ViewModelInject constructor(
+    private val pdfFileRepository: PdfFileRepository
+) : ViewModel(){
 
-    private val _pdfFiles = MutableLiveData<ArrayList<File>>()
 
-    val pdfFiles:LiveData<ArrayList<File>>
-        get() = _pdfFiles
+    val pdfFiles = pdfFileRepository.getAllPdfFiles()
+
+    fun insertPdfFile(pdfFile:PdfFile) = viewModelScope.launch {
+        pdfFileRepository.insertPdfFile(pdfFile)
+    }
+
+    fun deletePdfFileById(id:Int) = viewModelScope.launch {
+        pdfFileRepository.deletePdfFileById(id)
+    }
+
+    fun deleteAllPdfFiles() = viewModelScope.launch {
+        pdfFileRepository.deleteAllPdfFiles()
+    }
 
     fun fetchPdfFiles(dir:File){
         val filesList = ArrayList<File>()
@@ -22,10 +39,11 @@ class HomeViewModel : ViewModel(){
             }else{
                 if (file.name.endsWith(".pdf")){
                     filesList.add(file)
+                    val pdfFile = PdfFile(fileName = file.name,dateCreated = file.lastModified().toString(),file = file)
+                    insertPdfFile(pdfFile)
                 }
             }
         }
-        _pdfFiles.postValue(filesList)
     }
 
 }
