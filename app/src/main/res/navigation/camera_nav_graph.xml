@@ -15,10 +15,10 @@
 
     <fragment
         android:id="@+id/captureImageFragment"
-        android:name="com.example.docscanner.ui.fragments.CaptureImageFragment"
+        android:name="com.easyscan.docscanner.ui.fragments.CaptureImageFragment"
         android:label="CaptureImageFragment" />
     <fragment
         android:id="@+id/editImageFragment"
-        android:name="com.example.docscanner.ui.fragments.EditImageFragment"
+        android:name="com.easyscan.docscanner.ui.fragments.EditImageFragment"
         android:label="EditImageFragment" />
 </navigation>
