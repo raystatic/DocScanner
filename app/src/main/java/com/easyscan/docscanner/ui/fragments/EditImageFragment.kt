@@ -129,7 +129,7 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment), EditImageAdap
                             confirmDialogView.btnDoneConfirm.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.custom_shadow_dark_blue))
                             confirmDialogView.linCreatingPdf.hide()
                             confirmDialog.cancel()
-                            callback.onFinish()
+                            callback.onFinishFromEditImage(docs)
                         }
                     })
                 }
@@ -278,7 +278,7 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment), EditImageAdap
 
     interface EditImageInteractor{
         fun onNavigateToCapture()
-        fun onFinish()
+        fun onFinishFromEditImage(docList: List<Document>)
     }
 
     override fun onAttach(context: Context) {

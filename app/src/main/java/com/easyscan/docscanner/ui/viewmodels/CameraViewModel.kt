@@ -2,7 +2,6 @@ package com.easyscan.docscanner.ui.viewmodels
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,13 +16,11 @@ import com.itextpdf.text.Rectangle
 import com.itextpdf.text.pdf.ColumnText
 import com.itextpdf.text.pdf.PdfWriter
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 
 class CameraViewModel : ViewModel(){
 
@@ -39,6 +36,17 @@ class CameraViewModel : ViewModel(){
     fun createPdf(docList: List<Document>, filePath: String) = viewModelScope.launch {
         _pdfCreating.postValue(true)
         createPdfInBackground(docList,filePath)
+    }
+
+    fun deleteTempFiles(docList: List<Document>) = viewModelScope.launch {
+        deleteTempFilesInBackground(docList)
+    }
+
+    private suspend fun deleteTempFilesInBackground(docList: List<Document>) = withContext(Dispatchers.IO){
+        docList.forEach {
+            val file = File(it.photoUri?.path)
+            file.delete()
+        }
     }
 
 

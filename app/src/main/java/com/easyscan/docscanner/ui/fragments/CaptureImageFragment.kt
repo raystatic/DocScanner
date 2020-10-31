@@ -74,6 +74,7 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
             it?.let {docs ->
                 if (docs.isNotEmpty()){
                     docList = docs as ArrayList
+                    tempDocList = docs
                     val document = docList[docList.size -1]
                     glide.apply {
                         load(document.bitmap)
@@ -204,6 +205,7 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
 
     interface CaptureImageInteractor {
         fun onThumbClicked()
+        fun onFinishFromCaptureImage(docList: List<Document>)
     }
 
     override fun onAttach(context: Context) {
@@ -215,6 +217,7 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
 
     companion object{
         private var isImageRetaken = false
+        var tempDocList  = ArrayList<Document>()
     }
 
 }
