@@ -1,7 +1,7 @@
 package com.easyscan.docscanner.other
 
-import android.R.attr.src
 import android.content.Context
+import android.content.Intent
 import android.graphics.*
 import android.media.ExifInterface
 import android.net.Uri
@@ -9,9 +9,6 @@ import android.provider.MediaStore
 import com.easyscan.docscanner.R
 import com.itextpdf.text.Rectangle
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.abs
@@ -24,6 +21,14 @@ object CameraXUtility {
 
     fun getBitmapFromUri(uri: Uri, context: Context): Bitmap {
         return MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+    }
+
+    fun sharePdf(uri: Uri, context: Context){
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.type = "application/pdf"
+        context.startActivity(intent)
     }
 
     fun insertBitmapAtUri(uri: Uri, context: Context, bitmap: Bitmap) {

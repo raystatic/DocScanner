@@ -3,6 +3,7 @@ package com.easyscan.docscanner.ui.activities
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -224,6 +225,10 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
         val window = renameDialog.window
         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
 
+    }
+
+    override fun shareFile(item: PdfFile?) {
+        CameraXUtility.sharePdf(FileProvider.getUriForFile(this,"${application.packageName}.provider",item?.file!!), this)
     }
 
     override fun deleteFile(item: PdfFile?) {

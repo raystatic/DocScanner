@@ -10,4 +10,8 @@
         android:id="@+id/miDelete"
         android:title="Delete"/>
 
+    <item
+        android:id="@+id/miShare"
+        android:title="Share"/>
+
 </menu>

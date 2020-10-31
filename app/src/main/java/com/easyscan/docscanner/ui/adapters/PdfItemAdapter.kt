@@ -22,6 +22,7 @@ class PdfItemAdapter(var pdfItemListener: PdfItemListener) : RecyclerView.Adapte
         fun openPdf(file: File)
         fun rename(item: PdfFile?)
         fun deleteFile(item: PdfFile?)
+        fun shareFile(item: PdfFile?)
     }
 
     fun setData(list: List<PdfFile>){
@@ -78,6 +79,10 @@ class PdfItemAdapter(var pdfItemListener: PdfItemListener) : RecyclerView.Adapte
                             }
                             R.id.miDelete -> {
                                 pdfItemListener.deleteFile(item)
+                                return@setOnMenuItemClickListener true
+                            }
+                            R.id.miShare -> {
+                                pdfItemListener.shareFile(item)
                                 return@setOnMenuItemClickListener true
                             }
                             else -> return@setOnMenuItemClickListener false
