@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activities.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -99,12 +100,12 @@
         app:layout_anchorGravity="bottom|end"
         android:layout_margin="25dp"
         app:menu_fab_size="normal"
-        app:menu_colorPressed="@color/dark_green_light"
+        app:menu_colorPressed="@color/custom_dark_blue"
         app:menu_showShadow="true"
         app:menu_shadowRadius="4dp"
         app:menu_shadowXOffset="1dp"
         app:menu_shadowYOffset="3dp"
-        app:menu_colorNormal="@color/dark_green_light"
+        app:menu_colorNormal="@color/custom_dark_blue"
         app:menu_animationDelayPerItem="50"
         app:menu_icon="@drawable/fab_add"
         app:menu_buttonSpacing="0dp"
@@ -133,8 +134,8 @@
             app:fab_size="normal"
             android:src="@drawable/ic_stat_camera"
             android:padding="10dp"
-            app:fab_colorPressed="@color/light_orange_light"
-            app:fab_colorNormal="@color/light_orange_light"
+            app:fab_colorPressed="@color/custom_light_blue"
+            app:fab_colorNormal="@color/custom_light_blue"
             />
 
         <com.github.clans.fab.FloatingActionButton
@@ -144,8 +145,8 @@
             app:fab_size="normal"
             android:src="@drawable/ic_stat_gallery"
             android:padding="10dp"
-            app:fab_colorPressed="@color/light_orange_light"
-            app:fab_colorNormal="@color/light_orange_light"
+            app:fab_colorPressed="@color/custom_light_blue"
+            app:fab_colorNormal="@color/custom_light_blue"
             />
 
     </com.github.clans.fab.FloatingActionMenu>

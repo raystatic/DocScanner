@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -129,7 +130,13 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment),EditImageAdapt
                             confirmDialogView.linCreatingPdf.show()
                             confirmDialogView.btnCancelConfirm.isEnabled = false
                             confirmDialogView.btnDoneConfirm.isEnabled = false
+                            confirmDialogView.btnCancelConfirm.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.custom_shadow_light_blue))
+                            confirmDialogView.btnDoneConfirm.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.custom_shadow_light_blue))
                         }else{
+                            confirmDialogView.btnCancelConfirm.isEnabled = true
+                            confirmDialogView.btnDoneConfirm.isEnabled = true
+                            confirmDialogView.btnCancelConfirm.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.custom_lightest_blue))
+                            confirmDialogView.btnDoneConfirm.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.custom_shadow_dark_blue))
                             confirmDialogView.linCreatingPdf.hide()
                             confirmDialog.cancel()
                             callback.onFinish()

@@ -55,7 +55,6 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
         requestRequiredPermissions()
 
         outputDirectory = CameraXUtility.getOutputDirectory(requireContext())
-        startCamera()
 
         fabCapture.setOnClickListener {
             takePhoto()
@@ -100,7 +99,8 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-
+        Timber.d("permission granted true")
+        startCamera()
     }
 
     override fun onRequestPermissionsResult(
@@ -113,9 +113,10 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
     }
 
     private fun requestRequiredPermissions() {
-        if (Utility.hasCameraPermission(requireContext()))
+        if (Utility.hasCameraPermission(requireContext())){
+            startCamera()
             return
-
+        }
         EasyPermissions.requestPermissions(
                 this,
                 Constants.ASK_PERMISSION,

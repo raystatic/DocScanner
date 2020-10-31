@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.docscanner.R
 import com.example.docscanner.data.local.PdfFile
@@ -24,7 +27,6 @@ import com.example.docscanner.ui.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.create_pdf_confirmation.view.*
-import kotlinx.android.synthetic.main.rename_file_dialog.*
 import kotlinx.android.synthetic.main.rename_file_dialog.view.*
 import timber.log.Timber
 import java.io.File
@@ -88,6 +90,7 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
         rvPdfFiles.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = pdfItemAdapter
+            addItemDecoration(DividerItemDecoration(this@MainActivity,LinearLayout.VERTICAL))
         }
     }
 
@@ -104,12 +107,16 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
                     renameDialogView.linRenamingFile.show()
                     renameDialogView.btnGoBack.isEnabled = false
                     renameDialogView.btnRename.isEnabled = false
+                    renameDialogView.btnGoBack.setBackgroundColor(ContextCompat.getColor(this,R.color.custom_shadow_light_blue))
+                    renameDialogView.btnRename.setBackgroundColor(ContextCompat.getColor(this,R.color.custom_shadow_light_blue))
                 }
             }else{
                 if (renameDialog.isShowing){
                     renameDialogView.linRenamingFile.hide()
                     renameDialogView.btnGoBack.isEnabled = true
                     renameDialogView.btnRename.isEnabled = true
+                    renameDialogView.btnGoBack.setBackgroundColor(ContextCompat.getColor(this,R.color.custom_lightest_blue))
+                    renameDialogView.btnRename.setBackgroundColor(ContextCompat.getColor(this,R.color.custom_shadow_dark_blue))
                     renameDialog.cancel()
                 }
             }
@@ -121,12 +128,16 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
                     deleteDialogView.linCreatingPdf.show()
                     deleteDialogView.btnCancelConfirm.isEnabled = false
                     deleteDialogView.btnDoneConfirm.isEnabled = false
+                    deleteDialogView.btnCancelConfirm.setBackgroundColor(ContextCompat.getColor(this,R.color.custom_shadow_light_blue))
+                    deleteDialogView.btnDoneConfirm.setBackgroundColor(ContextCompat.getColor(this,R.color.custom_shadow_light_blue))
                 }
             }else{
                 if (deleteDialog.isShowing){
                     deleteDialogView.linCreatingPdf.hide()
                     deleteDialogView.btnCancelConfirm.isEnabled = true
                     deleteDialogView.btnDoneConfirm.isEnabled = true
+                    deleteDialogView.btnCancelConfirm.setBackgroundColor(ContextCompat.getColor(this,R.color.custom_lightest_blue))
+                    deleteDialogView.btnDoneConfirm.setBackgroundColor(ContextCompat.getColor(this,R.color.custom_shadow_dark_blue))
                     deleteDialog.cancel()
                 }
             }
@@ -216,6 +227,7 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
         deleteDialogView.apply {
 
             tvConfirmTitle.text = Constants.DELETE_PDF_TITLE
+            tvConfirmProgress.text = Constants.DELETING_FILE
 
             btnCancelConfirm.setOnClickListener {
                 deleteDialog.cancel()

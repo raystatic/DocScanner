@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:indeterminateTint="@color/custom_shadow_dark_blue"
             android:layout_margin="10dp"/>
 
         <TextView
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:text="Please wait.. your PDF is being created"
             android:textColor="@color/black"
+            android:id="@+id/tvConfirmProgress"
             android:layout_marginTop="10dp"/>
 
     </LinearLayout>
@@ -57,7 +59,7 @@
             android:textColor="@color/white"
             android:layout_marginEnd="10dp"
             android:id="@+id/btnCancelConfirm"
-            app:backgroundTint="@color/dark_orange_light"/>
+            app:backgroundTint="@color/custom_lightest_blue"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
@@ -69,7 +71,7 @@
             android:layout_marginStart="10dp"
             android:textColor="@color/white"
             android:id="@+id/btnDoneConfirm"
-            app:backgroundTint="@color/dark_green_light"/>
+            app:backgroundTint="@color/custom_shadow_dark_blue"/>
 
     </LinearLayout>
 

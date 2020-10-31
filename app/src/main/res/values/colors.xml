@@ -29,6 +29,11 @@
     <color name="dark_blue_dark">#C8CDF2</color>
     <color name="light_blue_dark">#E9EBFA</color>
 
+    <color name="custom_dark_blue">#12232E</color>
+    <color name="custom_light_blue">#007CC7</color>
+    <color name="custom_lightest_blue">#4DA8DA</color>
+    <color name="custom_shadow_dark_blue">#203647</color>
+    <color name="custom_shadow_light_blue">#EEFBFB</color>
 
 
 </resources>

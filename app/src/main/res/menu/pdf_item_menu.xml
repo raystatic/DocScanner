@@ -3,7 +3,8 @@
 
     <item
         android:id="@+id/miRename"
-        android:title="Rename"/>
+        android:title="Rename"
+        />
 
     <item
         android:id="@+id/miDelete"

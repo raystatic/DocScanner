@@ -59,7 +59,7 @@ class PdfItemAdapter(var pdfItemListener: PdfItemListener) : RecyclerView.Adapte
             }
 
             Timber.d("last modified time : ${item?.dateCreated}")
-            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+            val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US)
             val dateString = formatter.format(item?.dateCreated?.toLong()?.let { Date(it) })
             tvPdfDateCreated.text = "Created on: $dateString"
 

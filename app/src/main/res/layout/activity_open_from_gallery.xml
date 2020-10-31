@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activities.OpenFromGalleryActivity">
 
     <LinearLayout
@@ -19,15 +20,14 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/light_green_light"
+            android:indeterminateTint="@color/custom_shadow_dark_blue"
             android:layout_gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Please wait.. Your PDF is being created"
-            android:textColor="@color/dark_orange_light"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_marginTop="10dp"/>
 
