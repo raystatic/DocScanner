@@ -61,7 +61,7 @@ class EditImageAdapter(var ctx: Context, var listener:EditImageListener, var gli
 
             if (position == selectedPosition){
                 imgEditItem.background = ctx.resources.getDrawable(R.drawable.edit_image_selected_background)
-                imgEditItem.setPadding(convertToDp(10),convertToDp(10), convertToDp(10), convertToDp(10))
+                imgEditItem.setPadding(convertToDp(5),convertToDp(5), convertToDp(5), convertToDp(5))
             } else{
                 imgEditItem.background = null
                 imgEditItem.setPadding(convertToDp(0),convertToDp(0), convertToDp(0), convertToDp(0))

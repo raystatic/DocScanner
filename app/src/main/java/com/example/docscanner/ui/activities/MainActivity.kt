@@ -97,7 +97,15 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
     private fun subscribeToObservers() {
         vm.pdfFiles.observe(this, Observer {
             it?.let {files->
-                pdfItemAdapter.setData(files)
+                if (files.isNotEmpty()){
+                    linNoFiles.hide()
+                    rvPdfFiles.show()
+                    pdfItemAdapter.setData(files)
+                }else{
+                    rvPdfFiles.hide()
+                    linNoFiles.show()
+                }
+
             }
         })
 

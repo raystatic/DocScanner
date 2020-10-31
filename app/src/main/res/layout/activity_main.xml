@@ -15,19 +15,20 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/custom_shadow_dark_blue">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvToolbarTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="DocScanner"
+                android:text="Easy Scan"
                 android:textColor="@android:color/white"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -39,58 +40,46 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/flFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_anchor="@id/appBarLayout"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_marginBottom="?actionBarSize"
-        android:visibility="gone">
-
-        <fragment
-            android:id="@+id/navHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph" />
-    </FrameLayout>
-
-
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:id="@+id/bottomAppBar"
-        app:fabCradleMargin="10dp"
-        android:visibility="gone"
-        app:fabCradleRoundedCornerRadius="20dp">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:menu="@menu/bttom_nav_menu"
-            android:layout_marginEnd="16dp"
-            android:background="@android:color/transparent"/>
-
-    </com.google.android.material.bottomappbar.BottomAppBar>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_anchor="@id/appBarLayout"
-        android:id="@+id/relHome">
+        android:id="@+id/relHome"
+        android:layout_marginTop="?actionBarSize">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rvPdfFiles"
-            tools:listitem="@layout/pdf_item_layout"/>
+            tools:listitem="@layout/pdf_item_layout"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linNoFiles"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:visibility="visible"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_confusing"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oh Snap! No files found."
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
+
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu_action"
