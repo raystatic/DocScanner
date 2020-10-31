@@ -4,71 +4,98 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:background="@color/white">
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Have you rechecked all the snaps?\nDo you want to create PDF now?"
-        android:textColor="@color/black"
+        android:text="Enter a new name for your file"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:id="@+id/tvConfirmTitle"
-        />
+        android:layout_marginStart="10dp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:id="@+id/etFileName"
+            android:text="abcd"
+            android:padding="10dp"
+            android:background="@drawable/et_background"
+            android:layout_weight="0.75"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text=".pdf"
+            android:textColor="@color/black"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/linCreatingPdf"
         android:orientation="vertical"
         android:layout_gravity="center"
+        android:id="@+id/linRenamingFile"
+        android:layout_margin="10dp"
         android:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"/>
+            android:indeterminateTint="@color/dark_green_light"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please wait.. your PDF is being created"
+            android:text="Renaming your file. Please wait.."
             android:textColor="@color/black"
             android:layout_marginTop="10dp"/>
+
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_margin="10dp">
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cancel"
+            android:text="Go Back"
             android:textAllCaps="false"
             android:textSize="16sp"
             android:textColor="@color/white"
             android:layout_marginEnd="10dp"
-            android:id="@+id/btnCancelConfirm"
+            android:id="@+id/btnGoBack"
             app:backgroundTint="@color/dark_orange_light"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Proceed"
+            android:text="Rename"
             android:textAllCaps="false"
             android:textSize="16sp"
             android:layout_marginStart="10dp"
             android:textColor="@color/white"
-            android:id="@+id/btnDoneConfirm"
+            android:id="@+id/btnRename"
             app:backgroundTint="@color/dark_green_light"/>
 
     </LinearLayout>

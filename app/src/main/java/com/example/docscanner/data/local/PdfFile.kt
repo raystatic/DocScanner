@@ -21,5 +21,5 @@ data class PdfFile(
     val dateCreated:String,
 
     @ColumnInfo(name = "file")
-    val  file:File
+    var  file:File
 )

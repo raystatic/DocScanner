@@ -1,5 +1,6 @@
 package com.example.docscanner.other
 
+import android.R.attr.src
 import android.content.Context
 import android.graphics.*
 import android.media.ExifInterface
@@ -8,6 +9,11 @@ import android.provider.MediaStore
 import com.example.docscanner.R
 import com.itextpdf.text.Rectangle
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import kotlin.math.abs
 
 
@@ -24,6 +30,11 @@ object CameraXUtility {
         MediaStore.Images.Media.insertImage(context.contentResolver, bitmap,"title",null)
     }
 
+    fun isContainsSpecialCharacter(str:String): Boolean {
+        val p: Pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE)
+        val m: Matcher = p.matcher("I am a string")
+        return m.find()
+    }
 
      fun getOutputDirectory(context: Context): File {
         val appContext = context.applicationContext
