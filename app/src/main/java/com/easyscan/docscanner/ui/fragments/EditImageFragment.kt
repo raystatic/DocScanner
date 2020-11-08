@@ -22,6 +22,7 @@ import com.easyscan.docscanner.data.models.Document
 import com.easyscan.docscanner.other.CameraXUtility
 import com.easyscan.docscanner.other.ViewExtension.hide
 import com.easyscan.docscanner.other.ViewExtension.show
+import com.easyscan.docscanner.ui.activities.CameraActivity
 import com.easyscan.docscanner.ui.adapters.EditImageAdapter
 import com.easyscan.docscanner.ui.viewmodels.CameraViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,6 +50,12 @@ class EditImageFragment : Fragment(R.layout.edit_images_fragment), EditImageAdap
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (CameraActivity.shouldOpenFromGallery){
+            imgRetake.hide()
+        }else{
+            imgRetake.show()
+        }
 
         setUpEditImageAdapter()
 

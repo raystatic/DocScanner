@@ -1,6 +1,8 @@
 package com.easyscan.docscanner.ui.fragments
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -22,6 +24,7 @@ import com.easyscan.docscanner.other.Constants
 import com.easyscan.docscanner.other.Utility
 import com.easyscan.docscanner.other.ViewExtension.hide
 import com.easyscan.docscanner.other.ViewExtension.show
+import com.easyscan.docscanner.ui.activities.CameraActivity
 import com.easyscan.docscanner.ui.viewmodels.CameraViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.capture_image_fragment.*
@@ -49,23 +52,79 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
     lateinit var glide: RequestManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        requestRequiredPermissions()
 
-        outputDirectory = CameraXUtility.getOutputDirectory(requireContext())
+        if (CameraActivity.shouldOpenFromGallery){
+            openGallery()
+        }else{
+            super.onViewCreated(view, savedInstanceState)
+            requestRequiredPermissions()
 
-        fabCapture.setOnClickListener {
-            takePhoto()
+            outputDirectory = CameraXUtility.getOutputDirectory(requireContext())
+
+            fabCapture.setOnClickListener {
+                takePhoto()
+            }
+
+            docThumb.setOnClickListener {
+                Timber.d("capture image: $callback")
+                callback.onThumbClicked()
+            }
+
+            subscribeToObservers()
         }
 
-        docThumb.setOnClickListener {
-            Timber.d("capture image: $callback")
+    }
+
+    private fun openGallery() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 101 && resultCode == Activity.RESULT_OK){
+            docList.clear()
+            Timber.d("imagesList data: ${data?.data} ${data?.clipData}")
+            val imagesPath: List<String>? = data?.getStringExtra("data")?.split("\\|")
+            Timber.d("imagesList: $imagesPath")
+
+            if (data?.data == null && data?.clipData == null)
+                requireActivity().finish()
+
+            data?.data.let {
+                it?.let { it1 ->
+                    docList.add(Document(CameraXUtility.getBitmapFromUri(it1,requireContext()),it1))
+                }
+            }
+
+            val imagesSize = data?.clipData?.itemCount
+
+            if (imagesSize != null) {
+                for (i in 0 until imagesSize){
+                    data.clipData?.getItemAt(i)?.uri?.let {
+                        docList.add(Document(CameraXUtility.getBitmapFromUri(it,requireContext()),it))
+                    }
+                }
+            }
+
+//            if (docList.isNotEmpty()){
+//                val filePath = "${CameraXUtility.getOutputDirectory(requireContext())}/${SimpleDateFormat(
+//                    CameraXUtility.FILENAME, Locale.US
+//                ).format(System.currentTimeMillis())}.pdf"
+//                vm.createPdf(docList,filePath)
+//            }
+
+            vm.updateDocList(docList)
             callback.onThumbClicked()
+
+        }else{
+            requireActivity().finish()
         }
-
-        subscribeToObservers()
-
     }
 
     private fun subscribeToObservers() {
@@ -206,6 +265,7 @@ class CaptureImageFragment: Fragment(R.layout.capture_image_fragment), EasyPermi
     interface CaptureImageInteractor {
         fun onThumbClicked()
         fun onFinishFromCaptureImage(docList: List<Document>)
+
     }
 
     override fun onAttach(context: Context) {

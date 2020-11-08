@@ -1,6 +1,8 @@
 package com.easyscan.docscanner.ui.activities
 
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +10,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.easyscan.docscanner.R
 import com.easyscan.docscanner.data.models.Document
+import com.easyscan.docscanner.other.CameraXUtility
+import com.easyscan.docscanner.other.Constants
 import com.easyscan.docscanner.ui.fragments.CaptureImageFragment
 import com.easyscan.docscanner.ui.fragments.EditImageFragment
 import com.easyscan.docscanner.ui.viewmodels.CameraViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_camera.*
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class CameraActivity : AppCompatActivity(),
@@ -22,11 +28,16 @@ class CameraActivity : AppCompatActivity(),
 {
     private val vm: CameraViewModel by  viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
 
+        shouldOpenFromGallery = intent?.getBooleanExtra(Constants.OPEN_FROM_GALLERY, false) ?: false
+
+
     }
+
 
     override fun onThumbClicked() {
         cameraNavHostFragment.findNavController().navigate(R.id.action_to_editImageFragment)
@@ -60,5 +71,9 @@ class CameraActivity : AppCompatActivity(),
         }
         else
             super.onBackPressed()
+    }
+
+    companion object{
+        var shouldOpenFromGallery:Boolean = false
     }
 }

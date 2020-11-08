@@ -77,7 +77,10 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
     }
 
     private fun openGallery() {
-        startActivity(Intent(this,OpenFromGalleryActivity::class.java))
+//        startActivity(Intent(this,OpenFromGalleryActivity::class.java))
+        val intent = Intent(this, CameraActivity::class.java)
+        intent.putExtra(Constants.OPEN_FROM_GALLERY, true)
+        startActivity(intent)
     }
 
 
@@ -155,8 +158,11 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
 
 
     private fun navigateToCameraFragment() {
-        startActivity(Intent(this, CameraActivity::class.java))
+        val intent = Intent(this, CameraActivity::class.java)
+        intent.putExtra(Constants.OPEN_FROM_GALLERY, false)
+        startActivity(intent)
     }
+
 
 
     override fun openPdf(file: File) {
