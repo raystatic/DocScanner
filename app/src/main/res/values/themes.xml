@@ -19,4 +19,13 @@
     <style name="PdfItemTheme" parent="Theme.DocScanner">
         <item name="android:colorBackground">@color/white</item>
     </style>
+
+    <style name="SplashTheme" parent="Theme.DocScanner">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/spashbackground</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 </resources>
