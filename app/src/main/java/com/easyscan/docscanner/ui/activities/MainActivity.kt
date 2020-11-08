@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -88,7 +89,10 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
                 "current version" to version
             )
 
-            db.collection("devices").document(CameraXUtility.generateUniqueID(this).toString())
+
+            val uniqueId = Settings.Secure.getString(this.contentResolver,
+                Settings.Secure.ANDROID_ID)
+            db.collection("devices").document(uniqueId)
                 .set(deviceDetails)
                 .addOnSuccessListener { Timber.d("device details updated!") }
                 .addOnFailureListener { e -> Timber.d("device details cannot be updated due to ${e.localizedMessage}") }
