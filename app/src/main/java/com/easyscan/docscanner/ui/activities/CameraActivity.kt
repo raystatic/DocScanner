@@ -44,7 +44,11 @@ class CameraActivity : AppCompatActivity(),
     }
 
     override fun onNavigateToCapture() {
-        cameraNavHostFragment.findNavController().navigate(R.id.action_to_captureImageFragment)
+        if (shouldOpenFromGallery){
+            finish()
+        }else{
+            cameraNavHostFragment.findNavController().navigate(R.id.action_to_captureImageFragment)
+        }
     }
 
     override fun onFinishFromEditImage(docList: List<Document>) {
@@ -69,7 +73,9 @@ class CameraActivity : AppCompatActivity(),
             }
             finish()
         }
-        else
+        else if (shouldOpenFromGallery){
+            finish()
+        }else
             super.onBackPressed()
     }
 
