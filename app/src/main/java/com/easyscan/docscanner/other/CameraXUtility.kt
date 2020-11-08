@@ -2,6 +2,7 @@ package com.easyscan.docscanner.other
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.*
 import android.media.ExifInterface
 import android.net.Uri
@@ -9,6 +10,7 @@ import android.provider.MediaStore
 import com.easyscan.docscanner.R
 import com.itextpdf.text.Rectangle
 import java.io.File
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.abs
@@ -18,6 +20,26 @@ object CameraXUtility {
 
     const val FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS"
     const val PHOTO_EXTENSION = ".jpg"
+
+    private var uniqueID: String? = null
+    private const val PREF_UNIQUE_ID = "PREF_UNIQUE_ID"
+
+    @Synchronized
+    fun generateUniqueID(context: Context): String? {
+        if (uniqueID == null) {
+            val sharedPrefs = context.getSharedPreferences(
+                PREF_UNIQUE_ID, Context.MODE_PRIVATE
+            )
+            uniqueID = sharedPrefs.getString(PREF_UNIQUE_ID, null)
+            if (uniqueID == null) {
+                uniqueID = UUID.randomUUID().toString()
+                val editor: SharedPreferences.Editor = sharedPrefs.edit()
+                editor.putString(PREF_UNIQUE_ID, uniqueID)
+                editor.apply()
+            }
+        }
+        return uniqueID
+    }
 
     fun getBitmapFromUri(uri: Uri, context: Context): Bitmap {
         return MediaStore.Images.Media.getBitmap(context.contentResolver, uri)

@@ -6,6 +6,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.easyscan.docscanner.data.local.DocScannerDb
 import com.easyscan.docscanner.other.Constants
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +40,10 @@ object AppModule {
     @Singleton
     @Provides
     fun providePdfDao(db: DocScannerDb) = db.getPdfDao()
+
+    @Singleton
+    @Provides
+    fun provideFirestore() = Firebase.firestore
 
 
 }

@@ -3,7 +3,8 @@ package com.easyscan.docscanner.ui.activities
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,8 @@ import com.easyscan.docscanner.other.ViewExtension.hide
 import com.easyscan.docscanner.other.ViewExtension.show
 import com.easyscan.docscanner.ui.adapters.PdfItemAdapter
 import com.easyscan.docscanner.ui.viewmodels.HomeViewModel
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.create_pdf_confirmation.view.*
@@ -44,9 +47,14 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
     private lateinit var deleteDialog: Dialog
     private lateinit var deleteDialogView: View
 
+    private val db = Firebase.firestore
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        updateToFirebase()
 
         setUpRv()
 
@@ -63,6 +71,33 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
             menu_action.close(true)
             openGallery()
         }
+
+    }
+
+    private fun updateToFirebase() {
+        try {
+            val pInfo: PackageInfo =
+                this.packageManager.getPackageInfo(this.packageName, 0)
+            val version: String = pInfo.versionName
+            val deviceDetails=  hashMapOf(
+                "os version" to System.getProperty("os.version"),
+                "api level" to android.os.Build.VERSION.SDK_INT,
+                "device" to android.os.Build.DEVICE,
+                "model" to android.os.Build.MODEL,
+                "product" to android.os.Build.PRODUCT,
+                "current version" to version
+            )
+
+            db.collection("devices").document(CameraXUtility.generateUniqueID(this).toString())
+                .set(deviceDetails)
+                .addOnSuccessListener { Timber.d("device details updated!") }
+                .addOnFailureListener { e -> Timber.d("device details cannot be updated due to ${e.localizedMessage}") }
+
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+
+
 
     }
 

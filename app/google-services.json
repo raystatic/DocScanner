@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "261139312937",
+    "firebase_url": "https://easyscanner-34c58.firebaseio.com",
+    "project_id": "easyscanner-34c58",
+    "storage_bucket": "easyscanner-34c58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261139312937:android:47f7faa93ec560ea12c738",
+        "android_client_info": {
+          "package_name": "com.easyscan.docscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261139312937-1lecnd5jup057poo3k08h6kep3ug9mki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARZHbrxnNqmV7sY5gcYVFMPnrF6CaPPaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261139312937-1lecnd5jup057poo3k08h6kep3ug9mki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
