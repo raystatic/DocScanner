@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.easyscan.docscanner.data.local.PdfFile
 import com.easyscan.docscanner.data.repositories.PdfFileRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -103,5 +104,4 @@ class HomeViewModel @ViewModelInject constructor(
             _isFileDeleting.postValue(false)
         }
     }
-
 }

@@ -138,6 +138,7 @@ class MainActivity : AppCompatActivity(), PdfItemAdapter.PdfItemListener {
     }
 
     private fun subscribeToObservers() {
+
         vm.pdfFiles.observe(this, Observer {
             it?.let {files->
                 if (files.isNotEmpty()){
