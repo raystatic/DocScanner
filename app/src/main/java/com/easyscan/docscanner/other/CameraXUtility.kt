@@ -69,7 +69,7 @@ object CameraXUtility {
             File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() } }
         return if (mediaDir != null && mediaDir.exists())
             mediaDir else appContext.filesDir
-    }
+     }
 
      fun rotatateImageIfRequired(bmp: Bitmap, savedUri: Uri?): Bitmap? {
         val exiInterface = ExifInterface(savedUri?.path.toString())
